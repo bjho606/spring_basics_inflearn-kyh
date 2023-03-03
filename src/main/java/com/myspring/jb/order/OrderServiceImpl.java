@@ -2,13 +2,23 @@ package com.myspring.jb.order;
 
 import com.myspring.jb.discount.DiscountPolicy;
 import com.myspring.jb.discount.FixDiscountPolicy;
+import com.myspring.jb.discount.RateDiscountPolicy;
 import com.myspring.jb.member.Member;
 import com.myspring.jb.member.MemberRepository;
 import com.myspring.jb.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService {
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
-    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+//    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;    // 생성자 주입 방식
+    // [아래 2줄은 DIP 위반]
+//    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+//    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
