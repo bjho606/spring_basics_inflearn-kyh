@@ -1,5 +1,6 @@
 package com.myspring.jb.order;
 
+import com.myspring.jb.annotation.MainDiscountPolicy;
 import com.myspring.jb.discount.DiscountPolicy;
 import com.myspring.jb.discount.FixDiscountPolicy;
 import com.myspring.jb.discount.RateDiscountPolicy;
@@ -26,16 +27,16 @@ public class OrderServiceImpl implements OrderService {
 //        this.memberRepository = memberRepository;
 //        this.discountPolicy = rateDiscountPolicy;
 //    }
-//    @Autowired
-//    public OrderServiceImpl(MemberRepository memberRepository, @Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {     // 2. @Qualifier 사용
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
     @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {     // 3. @Primary 사용
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {     // 2. @Qualifier 사용
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {     // 3. @Primary 사용
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
